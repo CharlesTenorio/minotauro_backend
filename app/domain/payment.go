@@ -2,7 +2,6 @@ package domain
 
 import (
 	"errors"
-	"strings"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
@@ -10,6 +9,7 @@ import (
 
 type Payment struct {
 	Id       string    `json:"id"`
+	IdPark   string    `json:"idPark"`
 	Name     string    `json:"name"`
 	Active   bool      `json:"activate"`
 	CreateAt time.Time `json:"data"`
@@ -26,8 +26,10 @@ type PaymentRepository interface {
 func NewPayment() *Payment {
 	payment := Payment{
 		Id:       uuid.NewV4().String(),
-		CreateAt: time.Now(),
+		IdPark:   "",
+		Name:     "",
 		Active:   true,
+		CreateAt: time.Now(),
 	}
 
 	return &payment
@@ -38,11 +40,10 @@ func (p *Payment) validade() error {
 		return errors.New("O Nome o brigatório")
 	}
 
+	if p.IdPark == "" {
+		return errors.New("O codigo do parque é obrigatório")
+	}
+
 	return nil
-
-}
-
-func (payment *Payment) formatSpace() {
-	payment.Name = strings.TrimSpace(payment.Name)
 
 }

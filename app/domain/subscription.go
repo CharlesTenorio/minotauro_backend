@@ -13,8 +13,9 @@ type Subscription struct {
 	IdPark          string    `json:"id_park"`
 	IdCategory      string    `json:"id_categoria"`
 	IdPayment       string    `json:"id_payment"`
+	IdEvent         string    `json:"id_payment"`
 	Esteira         string    `json:"esteria"`
-	Ticket          []string  `json:"senahs"`
+	Ticket          []string  `json:"senhas"`
 	InscriptionDate time.Time `json:"data da inscrição"`
 	Horse           string    `json:"cavalo"`
 	Active          bool      `json:"activate"`
@@ -47,6 +48,26 @@ func (s *Subscription) validade() error {
 
 	if s.Esteira == "" {
 		return errors.New("Esteira e o brigatório")
+	}
+
+	if s.IdCategory == "" {
+		return errors.New("Codigo da catergoria é obrigatório")
+	}
+
+	if s.IdCowboy == "" {
+		return errors.New("Codigo do vaqueiro é obrigatório")
+	}
+
+	if s.IdPark == "" {
+		return errors.New("Codigo do Parque é obrigatório")
+	}
+
+	if s.IdPayment == "" {
+		return errors.New("Codigo do Pagamento é obrigatório")
+	}
+
+	if s.IdEvent == "" {
+		return errors.New("Codigo do Evento é obrigatório")
 	}
 
 	return nil

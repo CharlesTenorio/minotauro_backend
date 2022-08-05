@@ -2,7 +2,6 @@ package domain
 
 import (
 	"errors"
-	"strings"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
@@ -64,14 +63,5 @@ func (p *Park) validade() error {
 		return errors.New("Ponto de referencia e obritatório")
 	}
 	return nil
-
-}
-
-func (park *Park) formatSpace() {
-	park.Name = strings.TrimSpace(park.Name)
-	park.Address = strings.TrimSpace(park.Address)
-	park.Neighborhood = strings.TrimSpace(park.Neighborhood)
-	park.City = strings.TrimSpace(park.City)
-	park.Referencepoint = strings.TrimSpace(park.Referencepoint)
 
 }

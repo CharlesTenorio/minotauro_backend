@@ -2,7 +2,6 @@ package domain
 
 import (
 	"errors"
-	"strings"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
@@ -40,10 +39,5 @@ func (c *Category) validade() error {
 	}
 
 	return nil
-
-}
-
-func (payment *Payment) formatSpace() {
-	payment.Name = strings.TrimSpace(payment.Name)
 
 }

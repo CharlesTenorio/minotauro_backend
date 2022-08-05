@@ -2,7 +2,7 @@ package domain
 
 import (
 	"errors"
-	"strings"
+
 	"time"
 
 	uuid "github.com/satori/go.uuid"
@@ -10,7 +10,10 @@ import (
 
 type Event struct {
 	Id          string    `json:"id"`
+	IdPark      string    `json:"idPark"`
 	Name        string    `json:"name"`
+	BullLimits  uint16    `json:"maximo de bois derrubados"`
+	ExtraRounds uint16    `json:"quatidade de rodas extras"`
 	EventDate   time.Time `json:"Data do evento"`
 	StatusEvent string    `json:"status do evento"`
 	Active      bool      `json:"activate"`
@@ -45,11 +48,10 @@ func (e *Event) validade() error {
 		return errors.New("Data do evento é o brigatória")
 	}
 
+	if e.IdPark == "" {
+		return errors.New("O codigo do Parque é obrigatório")
+	}
+
 	return nil
-
-}
-
-func (event *Event) formatSpace() {
-	event.Name = strings.TrimSpace(event.Name)
 
 }

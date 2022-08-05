@@ -2,7 +2,6 @@ package domain
 
 import (
 	"errors"
-	"strings"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
@@ -15,7 +14,7 @@ type Cowboy struct {
 	Birth     time.Time `json:"birth"`
 	Cellphone string    `json:"celular"`
 	Active    bool      `json:"activate"`
-	img       string    `json:"img"`
+	Img       string    `json:"imgagem"`
 	CreateAt  time.Time `json:"data"`
 }
 
@@ -54,10 +53,5 @@ func (c *Cowboy) validade() error {
 		return errors.New("Celular não informado")
 	}
 	return nil
-
-}
-
-func (cowboy *Cowboy) formatSpace() {
-	cowboy.Name = strings.TrimSpace(cowboy.Name)
 
 }
