@@ -3,16 +3,18 @@ package database
 import (
 	"log"
 
-	"gorm.io/gorm"
 	"minotauro/app/domain"
+
+	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 type DataBase struct {
 	Db            *gorm.DB
 	Dsn           string
 	DsnTes        string
-	DbType        string
-	DbyTypeTest   string
 	Debug         bool
 	AutoMigrateDb bool
 	Env           string
@@ -25,34 +27,32 @@ func NewDb() *DataBase {
 func NewDbTes() *gorm.DB {
 	dbIntance := NewDb()
 	dbIntance.Env = "test"
-	dbIntance.DbyTypeTest = "sqlite3"
-	dbIntance.DsnTes = ":memory"
 	dbIntance.Debug = true
-	
-	connection, err :=dbIntance.Connect()
-	if err !=nil{
+
+	connection, err := dbIntance.Connect()
+	if err != nil {
 		log.Fatalf("erro no banco de testes : %v", err)
 	}
 	return connection
 }
 
-func (d *DataBase)Connect()(*gorm.DB, error){
+func (d *DataBase) Connect() (*gorm.DB, error) {
 	var err error
-	
-	if d.Env != "teste"{
-		d.Db, err = gorm.Open(d.DbType, d.Dsn)
-	} else{
-		d.Db, err = gorm.Open(d.DbyTypeTest, d.DsnTes)
+
+	if d.Env != "teste" {
+		d.Db, err = gorm.Open(postgres.Open(d.Dsn))
+	} else {
+		d.Db, err = gorm.Open(sqlite.Open(d.DsnTes))
 	}
 
-	if err !=nil{
+	if err != nil {
 		return nil, err
 	}
-	if d.Debug{
-		d.Db.Logger.LogMode(true)
+	if d.Debug {
+		d.Db.Logger.LogMode(logger.Error)
 	}
 
-	if d.Db.AutoMigrate{
+	if d.AutoMigrateDb {
 		d.Db.AutoMigrate(
 			&domain.Parque{},
 			&domain.Pagamento{},
@@ -62,11 +62,9 @@ func (d *DataBase)Connect()(*gorm.DB, error){
 			&domain.Evento{},
 			&domain.Rodizio{},
 			&domain.Corrida{},
-			
-			&domain.
-
-
+			&domain.Inscricao{},
 		)
 
 	}
+	return d.Db, nil
 }

@@ -37,19 +37,19 @@ func NewVaqueiro() *Vaqueiro {
 }
 
 func (c *Vaqueiro) validade() error {
-	if c.Name == "" {
+	if c.Nome == "" {
 		return errors.New("O Nome o brigatório")
 	}
 
-	if c.Sex == "" {
+	if c.Sexo == "" {
 		return errors.New("O sexo o brigatório")
 	}
 
-	if c.Birth.IsZero() {
+	if c.Nascimento.IsZero() {
 		return errors.New(" Nascimento é o brigatório")
 	}
 
-	if c.Cellphone == "" {
+	if c.Celular == "" {
 		return errors.New("Celular não informado")
 	}
 	return nil

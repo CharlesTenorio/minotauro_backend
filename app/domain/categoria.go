@@ -8,11 +8,12 @@ import (
 )
 
 type Categoria struct {
-	Id      string    `json:"id"`
-	Nome    string    `json:"nome"`
-	Valor   float64   `json:"valor"`
-	Ativado bool      `json:"activate"`
-	DataAt  time.Time `json:"data"`
+	Id       string    `json:"id"`
+	IdParque string    `json:"id_parque"`
+	Nome     string    `json:"nome"`
+	Valor    float64   `json:"valor"`
+	Ativado  bool      `json:"activate"`
+	DataAt   time.Time `json:"data"`
 }
 
 type CategoriaRepository interface {

@@ -7,21 +7,23 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-type bois struct {
-	numero    uint
-	maracacao string
-}
-
 type Corrida struct {
-	Id          string `json:"id"`
-	IdRodizio   string `json:"codiog do Rodizio"`
-	IdCorrida   string `json:"Codigo do vaqueiro"`
-	IdVaqueiro  string `json:"codigo do vaqueiro"`
-	IdCategoria string `json:"celular"`
-	Bois        map[string]*bois
-	Active      bool      `json:"activate"`
-	Img         string    `json:"imgagem"`
-	CreateAt    time.Time `json:"data"`
+	Id           string    `json:"id"`
+	IdRodizio    string    `json:"codiog do Rodizio"`
+	IdCorrida    string    `json:"Codigo do vaqueiro"`
+	IdVaqueiro   string    `json:"codigo do vaqueiro"`
+	IdCategoria  string    `json:"celular"`
+	PrimeiroBoi  string    `json:"1 Boi"`
+	SegundoBoi   string    `json:"2 Boi"`
+	TerceirooBoi string    `json:"3 Boi"`
+	QuartoBoi    string    `json:"4 Boi"`
+	QuintoBoi    string    `json:"5 Boi"`
+	SextoBoi     string    `json:"6 Boi"`
+	SetimoBoi    string    `json:"7 Boi"`
+	OitavoBoi    string    `json:"8 Boi"`
+	Active       bool      `json:"activate"`
+	Img          string    `json:"imgagem"`
+	CreateAt     time.Time `json:"data"`
 }
 
 type CorridaRepository interface {

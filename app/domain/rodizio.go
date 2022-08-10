@@ -8,38 +8,39 @@ import (
 	uuid "github.com/satori/go.uuid"
 )
 
-type Rotation struct {
-	Id       string    `json:"id"`
-	Number   uint64    `json:"numero"`
-	IdEvent  string    `json:"codigo do evento"`
+type Rodizio struct {
+	Id       string `json:"id"`
+	Numero   uint64 `json:"numero"`
+	IdEvento string `json:"codigo do evento"`
+	Corrida  []*Corrida
 	Active   bool      `json:"activate"`
 	CreateAt time.Time `json:"data"`
 }
 
-type RotationRepository interface {
-	GetById(id string) (Rotation, error)
-	Create(Rotation Rotation) (Rotation, error)
-	Update(Rotation Rotation) (Rotation, error)
+type RodizioRepository interface {
+	GetById(id string) (Rodizio, error)
+	Create(Rodizio Rodizio) (Rodizio, error)
+	Update(Rodizio Rodizio) (Rodizio, error)
 	Delete(id string) (string, error)
-	FindAll() ([]Rotation, error)
+	FindAll() ([]Rodizio, error)
 }
 
-func NewRotation() *Rotation {
-	rotation := Rotation{
+func NewRodizio() *Rodizio {
+	rodizio := Rodizio{
 		Id:       uuid.NewV4().String(),
 		CreateAt: time.Now(),
 		Active:   true,
 	}
 
-	return &rotation
+	return &rodizio
 }
 
-func (r *Rotation) validade() error {
-	if r.Number == 0 {
+func (r *Rodizio) validade() error {
+	if r.Numero == 0 {
 		return errors.New("O Numero o brigatório")
 	}
 
-	if r.IdEvent == "" {
+	if r.IdEvento == "" {
 		return errors.New("o código do evento é o brigatório")
 	}
 
