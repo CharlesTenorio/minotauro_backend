@@ -11,7 +11,7 @@ import (
 type Rotation struct {
 	Id       string    `json:"id"`
 	Number   uint64    `json:"numero"`
-	IdEvent  string    `json:"numero"`
+	IdEvent  string    `json:"codigo do evento"`
 	Active   bool      `json:"activate"`
 	CreateAt time.Time `json:"data"`
 }
