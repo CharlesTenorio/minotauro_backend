@@ -5,10 +5,12 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
 )
 
 type Parque struct {
-	Id                string    `json:"id"`
+	gorm.Model
+	IdParque          string    `json:"id_parque" gorm:"type:uuid;primary_key"`
 	Nome              string    `json:"name"`
 	Endereco          string    `json:"endereço"`
 	Bairro            string    `json:"Bairro"`
@@ -30,9 +32,9 @@ type ParqueRepository interface {
 
 func NewParque() *Parque {
 	parque := Parque{
-		Id:      uuid.NewV4().String(),
-		DataAt:  time.Now(),
-		Ativado: true,
+		IdParque: uuid.NewV4().String(),
+		DataAt:   time.Now(),
+		Ativado:  true,
 	}
 
 	return &parque

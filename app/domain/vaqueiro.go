@@ -8,7 +8,7 @@ import (
 )
 
 type Vaqueiro struct {
-	Id         string    `json:"id"`
+	IdVaqueiro string    `json:"id_vaquerio" gorm:"type:uuid;primary_key"`
 	Nome       string    `json:"name"`
 	Sexo       string    `json:"sex"`
 	Nascimento time.Time `json:"birth"`
@@ -28,9 +28,9 @@ type VaqueiroRepository interface {
 
 func NewVaqueiro() *Vaqueiro {
 	vaqueiro := Vaqueiro{
-		Id:     uuid.NewV4().String(),
-		DataAt: time.Now(),
-		Ativo:  true,
+		IdVaqueiro: uuid.NewV4().String(),
+		DataAt:     time.Now(),
+		Ativo:      true,
 	}
 
 	return &vaqueiro

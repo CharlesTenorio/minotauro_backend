@@ -6,15 +6,17 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
 )
 
 type Rodizio struct {
-	Id       string `json:"id"`
-	Numero   uint64 `json:"numero"`
-	IdEvento string `json:"codigo do evento"`
-	Corrida  []*Corrida
-	Active   bool      `json:"activate"`
-	CreateAt time.Time `json:"data"`
+	gorm.Model
+	IdRodizio string     `json:"id_rodizio" gorm:"type:uuid;primary_key"`
+	Numero    uint64     `json:"numero"`
+	IdEvento  string     `json:"codigo do evento"`
+	Corrida   []*Corrida `gorm:"foreignKey:Corrida"`
+	Active    bool       `json:"activate"`
+	CreateAt  time.Time  `json:"data"`
 }
 
 type RodizioRepository interface {
@@ -27,9 +29,9 @@ type RodizioRepository interface {
 
 func NewRodizio() *Rodizio {
 	rodizio := Rodizio{
-		Id:       uuid.NewV4().String(),
-		CreateAt: time.Now(),
-		Active:   true,
+		IdRodizio: uuid.NewV4().String(),
+		CreateAt:  time.Now(),
+		Active:    true,
 	}
 
 	return &rodizio

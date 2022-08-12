@@ -5,15 +5,17 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
 )
 
 type Categoria struct {
-	Id       string    `json:"id"`
-	IdParque string    `json:"id_parque"`
-	Nome     string    `json:"nome"`
-	Valor    float64   `json:"valor"`
-	Ativado  bool      `json:"activate"`
-	DataAt   time.Time `json:"data"`
+	gorm.Model
+	IdCategoria string    `json:"id_categoria" gorm:"type:uuid;primary_key"`
+	IdParque    string    `json:"id_parque" gorm:"column:id_parque;type:uuid;notnull"`
+	Nome        string    `json:"nome"`
+	Valor       float64   `json:"valor"`
+	Ativado     bool      `json:"activate"`
+	DataAt      time.Time `json:"data"`
 }
 
 type CategoriaRepository interface {
@@ -26,9 +28,9 @@ type CategoriaRepository interface {
 
 func NewCategoria() *Categoria {
 	categoria := Categoria{
-		Id:      uuid.NewV4().String(),
-		DataAt:  time.Now(),
-		Ativado: true,
+		IdCategoria: uuid.NewV4().String(),
+		DataAt:      time.Now(),
+		Ativado:     true,
 	}
 
 	return &categoria

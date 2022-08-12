@@ -5,10 +5,12 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
 )
 
 type Inscricao struct {
-	Id            string    `json:"id"`
+	gorm.Model
+	IdInscricao   string    `json:"id_inscricao" gorm:"type:uuid;primary_key"`
 	IdVaqueiro    string    `json:"id_vaqueiro"`
 	IdParque      string    `json:"id_park"`
 	IdCategoria   string    `json:"id_categoria"`
@@ -35,9 +37,9 @@ type InscricaoRepository interface {
 
 func NewInscricao() *Inscricao {
 	inscricao := Inscricao{
-		Id:     uuid.NewV4().String(),
-		DataAt: time.Now(),
-		Ativa:  true,
+		IdInscricao: uuid.NewV4().String(),
+		DataAt:      time.Now(),
+		Ativa:       true,
 	}
 
 	return &inscricao

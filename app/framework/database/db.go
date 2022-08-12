@@ -64,6 +64,7 @@ func (d *DataBase) Connect() (*gorm.DB, error) {
 			&domain.Corrida{},
 			&domain.Inscricao{},
 		)
+		d.Db.Model(domain.Corrida{}).AddFo
 
 	}
 	return d.Db, nil

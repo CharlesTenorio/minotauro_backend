@@ -6,10 +6,12 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
 )
 
 type Evento struct {
-	Id              string    `json:"id"`
+	gorm.Model
+	IdEvento        string    `json:"id_evento" gorm:"type:uuid;primary_key"`
 	IdParque        string    `json:"idPark"`
 	Nome            string    `json:"name"`
 	Litime_max_bois uint16    `json:"maximo de bois derrubados"`
@@ -32,9 +34,9 @@ type EventRepository interface {
 
 func NewEvent() *Evento {
 	evento := Evento{
-		Id:      uuid.NewV4().String(),
-		DataAt:  time.Now(),
-		Ativado: true,
+		IdEvento: uuid.NewV4().String(),
+		DataAt:   time.Now(),
+		Ativado:  true,
 	}
 
 	return &evento

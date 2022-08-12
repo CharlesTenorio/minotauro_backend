@@ -5,14 +5,16 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
 )
 
 type Pagamento struct {
-	Id       string    `json:"id"`
-	IdParque string    `json:"id parque"`
-	Nome     string    `json:"nome"`
-	Ativo    bool      `json:"ativo"`
-	DataAt   time.Time `json:"data cadastro"`
+	gorm.Model
+	IdPagamento string    `json:"id_formapg" gorm:"type:uuid;primary_key"`
+	IdParque    string    `json:"id parque"`
+	Nome        string    `json:"nome"`
+	Ativo       bool      `json:"ativo"`
+	DataAt      time.Time `json:"data cadastro"`
 }
 
 type PagamentoRepository interface {
@@ -25,9 +27,9 @@ type PagamentoRepository interface {
 
 func NewPagamento() *Pagamento {
 	Pagamento := Pagamento{
-		Id:     uuid.NewV4().String(),
-		Ativo:  true,
-		DataAt: time.Now(),
+		IdPagamento: uuid.NewV4().String(),
+		Ativo:       true,
+		DataAt:      time.Now(),
 	}
 
 	return &Pagamento

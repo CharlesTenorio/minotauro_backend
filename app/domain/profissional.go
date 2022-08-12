@@ -5,18 +5,20 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
 )
 
 type Profissionall struct {
-	Id         string    `json:"id"`
-	Nome       string    `json:"name"`
-	IdTipoProf string    `json:"Tipo do profissional"`
-	Sexo       string    `json:"sex"`
-	Nascimento time.Time `json:"birth"`
-	Celular    string    `json:"celular"`
-	Activado   bool      `json:"activate"`
-	Img        string    `json:"img"`
-	DataAt     time.Time `json:"data"`
+	gorm.Model
+	IdProfissional string    `json:"id_profissional" gorm:"type:uuid;primary_key"`
+	Nome           string    `json:"name"`
+	IdTipoProf     string    `json:"Tipo do profissional"`
+	Sexo           string    `json:"sex"`
+	Nascimento     time.Time `json:"birth"`
+	Celular        string    `json:"celular"`
+	Activado       bool      `json:"activate"`
+	Img            string    `json:"img"`
+	DataAt         time.Time `json:"data"`
 }
 
 type ProfissionallRepository interface {
@@ -29,9 +31,9 @@ type ProfissionallRepository interface {
 
 func NewProfissionall() *Profissionall {
 	profissionall := Profissionall{
-		Id:       uuid.NewV4().String(),
-		DataAt:   time.Now(),
-		Activado: true,
+		IdProfissional: uuid.NewV4().String(),
+		DataAt:         time.Now(),
+		Activado:       true,
 	}
 
 	return &profissionall

@@ -5,12 +5,13 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
 )
 
 type Corrida struct {
-	Id           string    `json:"id"`
+	gorm.Model
+	IdCorrida    string    `json:"id_corrida" gorm:"type:uuid;primary_key"`
 	IdRodizio    string    `json:"codiog do Rodizio"`
-	IdCorrida    string    `json:"Codigo do vaqueiro"`
 	IdVaqueiro   string    `json:"codigo do vaqueiro"`
 	IdCategoria  string    `json:"celular"`
 	PrimeiroBoi  string    `json:"1 Boi"`
@@ -36,9 +37,9 @@ type CorridaRepository interface {
 
 func NewCyclist() *Corrida {
 	corrida := Corrida{
-		Id:       uuid.NewV4().String(),
-		CreateAt: time.Now(),
-		Active:   true,
+		IdCorrida: uuid.NewV4().String(),
+		CreateAt:  time.Now(),
+		Active:    true,
 	}
 
 	return &corrida

@@ -5,12 +5,14 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
+	"gorm.io/gorm"
 )
 
 type TipoProfissional struct {
-	Id     string    `json:"id"`
-	Nome   string    `json:"name"`
-	DataAt time.Time `json:"data"`
+	gorm.Model
+	IdTipoProf string    `json:"id_tipo_prof" gorm:"type:uuid;primary_key"`
+	Nome       string    `json:"name"`
+	DataAt     time.Time `json:"data"`
 }
 
 type TipoProfissionalRepository interface {
@@ -23,8 +25,8 @@ type TipoProfissionalRepository interface {
 
 func NewTipoProfissional() *TipoProfissional {
 	tipoProfissional := TipoProfissional{
-		Id:     uuid.NewV4().String(),
-		DataAt: time.Now(),
+		IdTipoProf: uuid.NewV4().String(),
+		DataAt:     time.Now(),
 	}
 
 	return &tipoProfissional
