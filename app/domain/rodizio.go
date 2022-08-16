@@ -6,12 +6,10 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
-	"gorm.io/gorm"
 )
 
 type Rodizio struct {
-	gorm.Model
-	IdRodizio string     `json:"id_rodizio" gorm:"type:uuid;primary_key"`
+	IdRodizio string     `json:"id_rodizio"`
 	Numero    uint64     `json:"numero"`
 	IdEvento  string     `json:"codigo do evento"`
 	Corrida   []*Corrida `gorm:"foreignKey:Corrida"`

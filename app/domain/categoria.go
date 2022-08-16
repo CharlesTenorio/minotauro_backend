@@ -1,17 +1,14 @@
 package domain
 
 import (
-	"errors"
 	"time"
 
 	uuid "github.com/satori/go.uuid"
-	"gorm.io/gorm"
 )
 
 type Categoria struct {
-	gorm.Model
-	IdCategoria string    `json:"id_categoria" gorm:"type:uuid;primary_key"`
-	IdParque    string    `json:"id_parque" gorm:"column:id_parque;type:uuid;notnull"`
+	IdCategoria string    `json:"id_categoria"`
+	IdParque    string    `json:"id_parque"`
 	Nome        string    `json:"nome"`
 	Valor       float64   `json:"valor"`
 	Ativado     bool      `json:"activate"`
@@ -34,13 +31,4 @@ func NewCategoria() *Categoria {
 	}
 
 	return &categoria
-}
-
-func (c *Categoria) validade() error {
-	if c.Nome == "" {
-		return errors.New("O Nome o brigatório")
-	}
-
-	return nil
-
 }

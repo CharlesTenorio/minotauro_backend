@@ -8,7 +8,7 @@ import (
 )
 
 type Vaqueiro struct {
-	IdVaqueiro string    `json:"id_vaquerio" gorm:"type:uuid;primary_key"`
+	IdVaqueiro string    `json:"id_vaquerio"`
 	Nome       string    `json:"name"`
 	Sexo       string    `json:"sex"`
 	Nascimento time.Time `json:"birth"`

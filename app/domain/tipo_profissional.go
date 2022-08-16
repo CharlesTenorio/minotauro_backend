@@ -5,12 +5,10 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
-	"gorm.io/gorm"
 )
 
 type TipoProfissional struct {
-	gorm.Model
-	IdTipoProf string    `json:"id_tipo_prof" gorm:"type:uuid;primary_key"`
+	IdTipoProf string    `json:"id_tipo_prof"`
 	Nome       string    `json:"name"`
 	DataAt     time.Time `json:"data"`
 }

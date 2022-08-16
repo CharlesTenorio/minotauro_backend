@@ -5,13 +5,12 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
-	"gorm.io/gorm"
 )
 
 type Parque struct {
-	gorm.Model
-	IdParque          string    `json:"id_parque" gorm:"type:uuid;primary_key"`
-	Nome              string    `json:"name"`
+	IdParque          string    `json:"id_parque"`
+	Nome              string    `json:"nome"`
+	IdCamponato       string    `json:"id_campeonato"`
 	Endereco          string    `json:"endereço"`
 	Bairro            string    `json:"Bairro"`
 	Cidade            string    `json:"cidade"`

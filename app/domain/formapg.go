@@ -5,12 +5,10 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
-	"gorm.io/gorm"
 )
 
 type Pagamento struct {
-	gorm.Model
-	IdPagamento string    `json:"id_formapg" gorm:"type:uuid;primary_key"`
+	IdPagamento string    `json:"id_formapg"`
 	IdParque    string    `json:"id parque"`
 	Nome        string    `json:"nome"`
 	Ativo       bool      `json:"ativo"`

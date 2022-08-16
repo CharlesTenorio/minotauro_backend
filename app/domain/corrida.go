@@ -5,12 +5,10 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
-	"gorm.io/gorm"
 )
 
 type Corrida struct {
-	gorm.Model
-	IdCorrida    string    `json:"id_corrida" gorm:"type:uuid;primary_key"`
+	IdCorrida    string    `json:"id_corrida"`
 	IdRodizio    string    `json:"codiog do Rodizio"`
 	IdVaqueiro   string    `json:"codigo do vaqueiro"`
 	IdCategoria  string    `json:"celular"`

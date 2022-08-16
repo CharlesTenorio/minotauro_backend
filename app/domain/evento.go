@@ -6,12 +6,10 @@ import (
 	"time"
 
 	uuid "github.com/satori/go.uuid"
-	"gorm.io/gorm"
 )
 
 type Evento struct {
-	gorm.Model
-	IdEvento        string    `json:"id_evento" gorm:"type:uuid;primary_key"`
+	IdEvento        string    `json:"id_evento"`
 	IdParque        string    `json:"idPark"`
 	Nome            string    `json:"name"`
 	Litime_max_bois uint16    `json:"maximo de bois derrubados"`

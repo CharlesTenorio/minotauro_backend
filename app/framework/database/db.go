@@ -1,71 +1,46 @@
 package database
 
 import (
-	"log"
+	"database/sql"
+	"fmt"
 
-	"minotauro/app/domain"
+	config "minotauro/app/configuracao"
 
-	"gorm.io/driver/postgres"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
+	_ "github.com/lib/pq"
 )
 
-type DataBase struct {
-	Db            *gorm.DB
-	Dsn           string
-	DsnTes        string
-	Debug         bool
-	AutoMigrateDb bool
-	Env           string
-}
+var (
+	host      string
+	user      string
+	password  string
+	dbname    string
+	port      int64
+	pgsqlConn string
+)
 
-func NewDb() *DataBase {
-	return &DataBase{}
-}
+func Conn() (*sql.DB, error) {
 
-func NewDbTes() *gorm.DB {
-	dbIntance := NewDb()
-	dbIntance.Env = "test"
-	dbIntance.Debug = true
+	host = config.EnvLocalHostDb()
+	user = config.EnvUsrDb()
+	password = config.EnvSqlPassword()
+	dbname = config.EnvLocalDb()
+	port = 5432
 
-	connection, err := dbIntance.Connect()
-	if err != nil {
-		log.Fatalf("erro no banco de testes : %v", err)
-	}
-	return connection
-}
+	if config.EnvDev() {
+		pgsqlConn = fmt.Sprintf("host = %s port = %d user = %s password = %s dbname = %s sslmode=disable", host, port, user, password, dbname)
 
-func (d *DataBase) Connect() (*gorm.DB, error) {
-	var err error
-
-	if d.Env != "teste" {
-		d.Db, err = gorm.Open(postgres.Open(d.Dsn))
 	} else {
-		d.Db, err = gorm.Open(sqlite.Open(d.DsnTes))
+		pgsqlConn = config.EnvDbHeroku()
+	}
+
+	db, err := sql.Open("postgres", pgsqlConn)
+
+	if err != nil {
+		panic(err)
 	}
 
 	if err != nil {
 		return nil, err
 	}
-	if d.Debug {
-		d.Db.Logger.LogMode(logger.Error)
-	}
-
-	if d.AutoMigrateDb {
-		d.Db.AutoMigrate(
-			&domain.Parque{},
-			&domain.Pagamento{},
-			&domain.TipoProfissional{},
-			&domain.Profissionall{},
-			&domain.Categoria{},
-			&domain.Evento{},
-			&domain.Rodizio{},
-			&domain.Corrida{},
-			&domain.Inscricao{},
-		)
-		d.Db.Model(domain.Corrida{}).AddFo
-
-	}
-	return d.Db, nil
+	return db, nil
 }
