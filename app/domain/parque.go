@@ -3,8 +3,6 @@ package domain
 import (
 	"errors"
 	"time"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 type Parque struct {
@@ -19,24 +17,6 @@ type Parque struct {
 	Img               string    `json:"img"`
 	PorntoDeRefrencia string    `json:"reference point"`
 	DataAt            time.Time `json:"data"`
-}
-
-type ParqueRepository interface {
-	GetById(id string) (Parque, error)
-	Create(Parque Parque) (Parque, error)
-	Update(Parque Parque) (Parque, error)
-	Delete(id string) (string, error)
-	FindAll() ([]Parque, error)
-}
-
-func NewParque() *Parque {
-	parque := Parque{
-		IdParque: uuid.NewV4().String(),
-		DataAt:   time.Now(),
-		Ativado:  true,
-	}
-
-	return &parque
 }
 
 func (p *Parque) validade() error {

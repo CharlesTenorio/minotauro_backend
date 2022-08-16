@@ -3,8 +3,6 @@ package domain
 import (
 	"errors"
 	"time"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 type Vaqueiro struct {
@@ -16,24 +14,6 @@ type Vaqueiro struct {
 	Ativo      bool      `json:"activate"`
 	Img        string    `json:"imgagem"`
 	DataAt     time.Time `json:"data"`
-}
-
-type VaqueiroRepository interface {
-	GetById(id string) (Vaqueiro, error)
-	Create(Vaqueiro Vaqueiro) (Vaqueiro, error)
-	Update(Vaqueiro Vaqueiro) (Vaqueiro, error)
-	Delete(id string) (string, error)
-	FindAll() ([]Vaqueiro, error)
-}
-
-func NewVaqueiro() *Vaqueiro {
-	vaqueiro := Vaqueiro{
-		IdVaqueiro: uuid.NewV4().String(),
-		DataAt:     time.Now(),
-		Ativo:      true,
-	}
-
-	return &vaqueiro
 }
 
 func (c *Vaqueiro) validade() error {

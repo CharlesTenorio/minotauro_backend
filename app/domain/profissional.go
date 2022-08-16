@@ -3,11 +3,9 @@ package domain
 import (
 	"errors"
 	"time"
-
-	uuid "github.com/satori/go.uuid"
 )
 
-type Profissionall struct {
+type Profissional struct {
 	IdProfissional string    `json:"id_profissional"`
 	Nome           string    `json:"name"`
 	IdTipoProf     string    `json:"Tipo do profissional"`
@@ -19,25 +17,7 @@ type Profissionall struct {
 	DataAt         time.Time `json:"data"`
 }
 
-type ProfissionallRepository interface {
-	GetById(id string) (Profissionall, error)
-	Create(Profissionall Profissionall) (Profissionall, error)
-	Update(Profissionall Profissionall) (Profissionall, error)
-	Delete(id string) (string, error)
-	FindAll() ([]Profissionall, error)
-}
-
-func NewProfissionall() *Profissionall {
-	profissionall := Profissionall{
-		IdProfissional: uuid.NewV4().String(),
-		DataAt:         time.Now(),
-		Activado:       true,
-	}
-
-	return &profissionall
-}
-
-func (p *Profissionall) validade() error {
+func (p *Profissional) validade() error {
 	if p.Nome == "" {
 		return errors.New("O Nome o brigatorio")
 	}

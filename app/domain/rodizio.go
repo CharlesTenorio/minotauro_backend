@@ -4,8 +4,6 @@ import (
 	"errors"
 
 	"time"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 type Rodizio struct {
@@ -15,24 +13,6 @@ type Rodizio struct {
 	Corrida   []*Corrida `gorm:"foreignKey:Corrida"`
 	Active    bool       `json:"activate"`
 	CreateAt  time.Time  `json:"data"`
-}
-
-type RodizioRepository interface {
-	GetById(id string) (Rodizio, error)
-	Create(Rodizio Rodizio) (Rodizio, error)
-	Update(Rodizio Rodizio) (Rodizio, error)
-	Delete(id string) (string, error)
-	FindAll() ([]Rodizio, error)
-}
-
-func NewRodizio() *Rodizio {
-	rodizio := Rodizio{
-		IdRodizio: uuid.NewV4().String(),
-		CreateAt:  time.Now(),
-		Active:    true,
-	}
-
-	return &rodizio
 }
 
 func (r *Rodizio) validade() error {

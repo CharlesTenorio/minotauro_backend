@@ -3,8 +3,6 @@ package domain
 import (
 	"errors"
 	"time"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 type Inscricao struct {
@@ -23,24 +21,6 @@ type Inscricao struct {
 	Ativa         bool      `json:"activate"`
 	Img           string    `json:"img"`
 	DataAt        time.Time `json:"data"`
-}
-
-type InscricaoRepository interface {
-	GetById(id string) (Inscricao, error)
-	Create(Inscricao Inscricao) (Inscricao, error)
-	Update(Inscricao Inscricao) (Inscricao, error)
-	Delete(id string) (string, error)
-	FindAll() ([]Inscricao, error)
-}
-
-func NewInscricao() *Inscricao {
-	inscricao := Inscricao{
-		IdInscricao: uuid.NewV4().String(),
-		DataAt:      time.Now(),
-		Ativa:       true,
-	}
-
-	return &inscricao
 }
 
 func (s *Inscricao) validade() error {

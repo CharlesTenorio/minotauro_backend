@@ -3,8 +3,6 @@ package domain
 import (
 	"errors"
 	"time"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 type Corrida struct {
@@ -23,24 +21,6 @@ type Corrida struct {
 	Active       bool      `json:"activate"`
 	Img          string    `json:"imgagem"`
 	CreateAt     time.Time `json:"data"`
-}
-
-type CorridaRepository interface {
-	GetById(id string) (Corrida, error)
-	Create(Corrida Corrida) (Corrida, error)
-	Update(Corrida Corrida) (Corrida, error)
-	Delete(id string) (string, error)
-	FindAll() ([]Corrida, error)
-}
-
-func NewCyclist() *Corrida {
-	corrida := Corrida{
-		IdCorrida: uuid.NewV4().String(),
-		CreateAt:  time.Now(),
-		Active:    true,
-	}
-
-	return &corrida
 }
 
 func (c *Corrida) validade() error {

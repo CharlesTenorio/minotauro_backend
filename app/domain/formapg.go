@@ -3,8 +3,6 @@ package domain
 import (
 	"errors"
 	"time"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 type Pagamento struct {
@@ -13,24 +11,6 @@ type Pagamento struct {
 	Nome        string    `json:"nome"`
 	Ativo       bool      `json:"ativo"`
 	DataAt      time.Time `json:"data cadastro"`
-}
-
-type PagamentoRepository interface {
-	GetById(id string) (Pagamento, error)
-	Create(Pagamento Pagamento) (Pagamento, error)
-	Update(Pagamento Pagamento) (Pagamento, error)
-	Delete(id string) (string, error)
-	FindAll() ([]Pagamento, error)
-}
-
-func NewPagamento() *Pagamento {
-	Pagamento := Pagamento{
-		IdPagamento: uuid.NewV4().String(),
-		Ativo:       true,
-		DataAt:      time.Now(),
-	}
-
-	return &Pagamento
 }
 
 func (p *Pagamento) validade() error {

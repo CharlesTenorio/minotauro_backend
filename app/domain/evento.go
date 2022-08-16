@@ -4,8 +4,6 @@ import (
 	"errors"
 
 	"time"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 type Evento struct {
@@ -20,24 +18,6 @@ type Evento struct {
 	Ativado         bool      `json:"activate"`
 	ImgEvento       string    `json:"img"`
 	DataAt          time.Time `json:"data"`
-}
-
-type EventRepository interface {
-	GetById(id string) (Evento, error)
-	Create(Evento Evento) (Evento, error)
-	Update(Evento Evento) (Evento, error)
-	Delete(id string) (string, error)
-	FindAll() ([]Evento, error)
-}
-
-func NewEvent() *Evento {
-	evento := Evento{
-		IdEvento: uuid.NewV4().String(),
-		DataAt:   time.Now(),
-		Ativado:  true,
-	}
-
-	return &evento
 }
 
 func (e *Evento) validade() error {
