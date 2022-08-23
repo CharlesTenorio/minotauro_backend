@@ -2,6 +2,7 @@ package domain
 
 import (
 	"errors"
+	"strings"
 	"time"
 )
 
@@ -14,6 +15,14 @@ type Vaqueiro struct {
 	Ativo      bool      `json:"activate"`
 	Img        string    `json:"imgagem"`
 	DataAt     time.Time `json:"data"`
+}
+
+func (vaqueiro *Vaqueiro) Prepere() error {
+	if erro := vaqueiro.validade(); erro != nil {
+		return erro
+	}
+	vaqueiro.formatSpace()
+	return nil
 }
 
 func (c *Vaqueiro) validade() error {
@@ -34,4 +43,8 @@ func (c *Vaqueiro) validade() error {
 	}
 	return nil
 
+}
+
+func (vaqueiro *Vaqueiro) formatSpace() {
+	vaqueiro.Nome = strings.TrimSpace(vaqueiro.Nome)
 }

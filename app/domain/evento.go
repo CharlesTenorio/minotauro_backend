@@ -2,6 +2,7 @@ package domain
 
 import (
 	"errors"
+	"strings"
 
 	"time"
 )
@@ -20,6 +21,14 @@ type Evento struct {
 	DataAt          time.Time `json:"data"`
 }
 
+func (evento *Evento) Prepere() error {
+	if erro := evento.validade(); erro != nil {
+		return erro
+	}
+	evento.formatSpace()
+	return nil
+}
+
 func (e *Evento) validade() error {
 	if e.Nome == "" {
 		return errors.New("O Nome o brigatório")
@@ -35,4 +44,7 @@ func (e *Evento) validade() error {
 
 	return nil
 
+}
+func (evento *Evento) formatSpace() {
+	evento.Nome = strings.TrimSpace(evento.Nome)
 }

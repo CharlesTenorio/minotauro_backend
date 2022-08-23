@@ -2,6 +2,7 @@ package domain
 
 import (
 	"errors"
+	"strings"
 	"time"
 )
 
@@ -15,6 +16,14 @@ type Profissional struct {
 	Activado       bool      `json:"activate"`
 	Img            string    `json:"img"`
 	DataAt         time.Time `json:"data"`
+}
+
+func (profissional *Profissional) Prepere() error {
+	if erro := profissional.validade(); erro != nil {
+		return erro
+	}
+	profissional.formatSpace()
+	return nil
 }
 
 func (p *Profissional) validade() error {
@@ -40,4 +49,8 @@ func (p *Profissional) validade() error {
 
 	return nil
 
+}
+
+func (profissional *Profissional) formatSpace() {
+	profissional.Nome = strings.TrimSpace(profissional.Nome)
 }

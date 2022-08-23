@@ -36,5 +36,4 @@ func (c *Corrida) validade() error {
 		return errors.New("Celular não informado")
 	}
 	return nil
-
 }

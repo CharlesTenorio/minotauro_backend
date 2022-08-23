@@ -2,6 +2,7 @@ package domain
 
 import (
 	"errors"
+	"strings"
 	"time"
 )
 
@@ -21,6 +22,14 @@ type Inscricao struct {
 	Ativa         bool      `json:"activate"`
 	Img           string    `json:"img"`
 	DataAt        time.Time `json:"data"`
+}
+
+func (inscricao *Inscricao) Prepere() error {
+	if erro := inscricao.validade(); erro != nil {
+		return erro
+	}
+	inscricao.formatSpace()
+	return nil
 }
 
 func (s *Inscricao) validade() error {
@@ -54,4 +63,8 @@ func (s *Inscricao) validade() error {
 
 	return nil
 
+}
+
+func (inscricao *Inscricao) formatSpace() {
+	inscricao.Esteira = strings.TrimSpace(inscricao.Esteira)
 }

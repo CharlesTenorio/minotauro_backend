@@ -1,3 +1,18 @@
+CREATE TABLE campeonato (
+                            id_campeonato uuid NOT NULL,
+                            nome varchar(50) NOT NULL,
+                            data_inicial  DATE NOT NULL,
+                            data_fimal DATE NOT null,
+                            valor_primeiro_lugar NUMERIC(9,2) NOT null,
+                            valor_segundo_lugar NUMERIC(9,2) NOT null,
+                            valor_terceiro_lugar NUMERIC(9,2) NOT null,
+                            valor_quarto_lugar NUMERIC(9,2) NOT null,
+                            cartaz varchar(300),
+                            ativo boolean NOT NULL,
+                            data_at timestamp NOT NULL,
+                            CONSTRAINT campeonato_pkey PRIMARY KEY (id_campeonato)
+);
+
 CREATE TABLE parque (
 	id_parque UUID not NULL PRIMARY KEY,
 	nome VARCHAR ( 50 )  NOT NULL,

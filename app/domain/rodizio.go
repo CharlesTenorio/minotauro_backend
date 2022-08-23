@@ -7,12 +7,19 @@ import (
 )
 
 type Rodizio struct {
-	IdRodizio string     `json:"id_rodizio"`
-	Numero    uint64     `json:"numero"`
-	IdEvento  string     `json:"codigo do evento"`
-	Corrida   []*Corrida `gorm:"foreignKey:Corrida"`
-	Active    bool       `json:"activate"`
-	CreateAt  time.Time  `json:"data"`
+	IdRodizio string    `json:"id_rodizio"`
+	Numero    uint64    `json:"numero"`
+	IdEvento  string    `json:"codigo do evento"`
+	Active    bool      `json:"activate"`
+	CreateAt  time.Time `json:"data"`
+}
+
+func (rodizio *Rodizio) Prepere() error {
+	if erro := rodizio.validade(); erro != nil {
+		return erro
+	}
+
+	return nil
 }
 
 func (r *Rodizio) validade() error {

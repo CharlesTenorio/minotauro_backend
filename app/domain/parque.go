@@ -2,6 +2,7 @@ package domain
 
 import (
 	"errors"
+	"strings"
 	"time"
 )
 
@@ -17,6 +18,14 @@ type Parque struct {
 	Img               string    `json:"img"`
 	PorntoDeRefrencia string    `json:"reference point"`
 	DataAt            time.Time `json:"data"`
+}
+
+func (parque *Parque) Prepere() error {
+	if erro := parque.validade(); erro != nil {
+		return erro
+	}
+	parque.formatSpace()
+	return nil
 }
 
 func (p *Parque) validade() error {
@@ -45,4 +54,8 @@ func (p *Parque) validade() error {
 	}
 	return nil
 
+}
+
+func (parque *Parque) formatSpace() {
+	parque.Nome = strings.TrimSpace(parque.Nome)
 }
