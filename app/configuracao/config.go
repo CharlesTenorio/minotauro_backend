@@ -1,96 +1,82 @@
 package config
 
 import (
+	"github.com/joho/godotenv"
 	"log"
 	"os"
+	"regexp"
 	"strconv"
-
-	"github.com/joho/godotenv"
 )
 
-func EnvCloudName() string {
-	err := godotenv.Load()
+const projectDirName = "minotauro_backend"
+
+func loadEnv() {
+	projectName := regexp.MustCompile(`^(.*` + projectDirName + `)`)
+	currentWorkDirectory, _ := os.Getwd()
+	rootPath := projectName.Find([]byte(currentWorkDirectory))
+
+	err := godotenv.Load(string(rootPath) + `/.env`)
+
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatalf("Error loading .env file")
 	}
+}
+
+func EnvCloudName() string {
+	loadEnv()
 	return os.Getenv("CLOUDINARY_CLOUD_NAME")
 }
 
 func EnvCloudAPIKey() string {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	loadEnv()
+
 	return os.Getenv("CLOUDINARY_API_KEY")
 }
 
 func EnvCloudAPISecret() string {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	loadEnv()
+
 	return os.Getenv("CLOUDINARY_API_SECRET")
 }
 
 func EnvCloudUploadFolder() string {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	loadEnv()
+
 	return os.Getenv("CLOUDINARY_UPLOAD_FOLDER")
 }
 
-func EnvDbHeroku() string {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-	return os.Getenv("DATABASE_URL")
-
-}
-
 func EnvDev() bool {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	loadEnv()
+
 	dev, _ := strconv.ParseBool(os.Getenv("DEV"))
 	return dev
 
 }
 
 func EnvLocalHostDb() string {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	loadEnv()
+
 	return os.Getenv("SQL_HOST")
 
 }
 
 func EnvUsrDb() string {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	loadEnv()
+
 	return os.Getenv("SQL_USER")
 
 }
 
 func EnvSqlPassword() string {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	loadEnv()
+
 	return os.Getenv("SQL_PASSWORD")
 
 }
 
 func EnvLocalDb() string {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	loadEnv()
+
 	return os.Getenv("SQL_DATABASE")
 
 }

@@ -12,6 +12,10 @@ type CamponatoRepoDb struct {
 
 var validation d.Campeonato
 
+func NewCampeonatoDb(db *sql.DB) *CamponatoRepoDb {
+	return &CamponatoRepoDb{db: db}
+}
+
 func (c *CamponatoRepoDb) FindAll() ([]d.Campeonato, error) {
 	var campeonato d.Campeonato
 	var campeonatos []d.Campeonato
@@ -30,10 +34,6 @@ func (c *CamponatoRepoDb) FindAll() ([]d.Campeonato, error) {
 
 	return campeonatos, nil
 
-}
-
-func NewCampeonatoDb(db *sql.DB) *CamponatoRepoDb {
-	return &CamponatoRepoDb{db: db}
 }
 
 func (c *CamponatoRepoDb) GetById(id string) (d.Campeonato, error) {
@@ -57,20 +57,18 @@ func (c *CamponatoRepoDb) GetById(id string) (d.Campeonato, error) {
 }
 
 func (c *CamponatoRepoDb) Create(campeonato d.Campeonato) (d.Campeonato, error) {
-	err := validation.Prepere()
-	if err != nil {
-		return d.Campeonato{}, err
-	}
+
 	stmt, err := c.db.Prepare("INSERT INTO campeonato (id_campeonato, nome, data_inicial, data_fimal," +
-		"valor_primeiro_lugar, valor_segundo_lugar, valor_terceiro_lugar," +
-		"valor_quarto_lugar, cartaz, ativo, data_at" +
-		"VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10);")
+		" valor_primeiro_lugar, valor_segundo_lugar, valor_terceiro_lugar, valor_quarto_lugar, " +
+		"cartaz, ativo, data_at, soft_delete)" +
+		"VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12);")
 	if err != nil {
 		return d.Campeonato{}, err
 	}
 	_, err = stmt.Exec(campeonato.IdCamponato, campeonato.Nome, campeonato.DataInicial, campeonato.DataFinal,
 		campeonato.ValPrimeiroLugar, campeonato.ValSegundoLugar,
-		campeonato.ValTerceiroLugar, campeonato.ValQuartoLugar)
+		campeonato.ValTerceiroLugar, campeonato.ValQuartoLugar,
+		campeonato.Cartaz, campeonato.Ativo, campeonato.DataAt, campeonato.SoftDelete)
 	if err != nil {
 		return d.Campeonato{}, err
 	}

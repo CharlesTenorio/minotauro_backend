@@ -14,11 +14,12 @@ type CampeonatoRepository interface {
 	FindAll() ([]d.Campeonato, error)
 }
 
-func NewCampeonato() *d.Campeonato {
+func NovoCampeonato() *d.Campeonato {
 	campeonato := d.Campeonato{
 		IdCamponato: uuid.NewV4().String(),
 		DataAt:      time.Now(),
 		Ativo:       true,
+		SoftDelete:  false,
 	}
 
 	return &campeonato

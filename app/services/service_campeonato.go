@@ -11,6 +11,8 @@ type CampeonatoService struct {
 	RepoCamoponanto r.CampeonatoRepository
 }
 
+var validacao domain.MessagenErros
+
 func NewCamponatoServece(repo *r.CamponatoRepoDb) *CampeonatoService {
 	return &CampeonatoService{RepoCamoponanto: repo}
 }
@@ -26,6 +28,12 @@ func (c *CampeonatoService) GetById(id string) (domain.Campeonato, error) {
 func (c *CampeonatoService) Create(nome string, data_ini, data_final time.Time, vpLugar,
 	vsLugar, vtLugar, vqLugar float64, cartaz string) (domain.Campeonato, error) {
 	camp := domain.NovoCampeonato()
+	validacao.CampoObriatorio = nome
+	validacao.DataInicial = data_ini
+	validacao.DataFinal = data_final
+	validacao.DataObriagoria = data_ini
+	validacao.ChecarMenorValor()
+
 	camp.Nome = nome
 	camp.DataInicial = data_ini
 	camp.DataFinal = data_final
@@ -34,6 +42,7 @@ func (c *CampeonatoService) Create(nome string, data_ini, data_final time.Time, 
 	camp.ValTerceiroLugar = vtLugar
 	camp.ValQuartoLugar = vqLugar
 	camp.Cartaz = cartaz
+
 	cp, err := c.RepoCamoponanto.Create(*camp)
 	if err != nil {
 		return domain.Campeonato{}, err

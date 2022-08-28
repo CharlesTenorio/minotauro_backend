@@ -3,7 +3,6 @@ package database
 import (
 	"database/sql"
 	"fmt"
-
 	config "minotauro/app/configuracao"
 
 	_ "github.com/lib/pq"
@@ -28,9 +27,6 @@ func Conn() (*sql.DB, error) {
 
 	if config.EnvDev() {
 		pgsqlConn = fmt.Sprintf("host = %s port = %d user = %s password = %s dbname = %s sslmode=disable", host, port, user, password, dbname)
-
-	} else {
-		pgsqlConn = config.EnvDbHeroku()
 	}
 
 	db, err := sql.Open("postgres", pgsqlConn)

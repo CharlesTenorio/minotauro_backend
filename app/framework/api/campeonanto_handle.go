@@ -18,13 +18,13 @@ func CriarCampeonato(c *gin.Context) {
 	}
 	repositorySql := repositorios.NewCampeonatoDb(db)
 	serv := services.NewCamponatoServece(repositorySql)
-	nome := c.Param("nome")
-	datIni := c.Param("dataInical")
-	datFim := c.Param("dataFim")
-	valPrimeioPremioStr := c.Param("valor_primeioro_lugar")
-	valSegundoLugarStr := c.Param("Valor_segundo_lugar")
-	valoTerceiroLugarStr := c.Param("valor_terceiro_lugar")
-	valorQuartoLugarStr := c.Param("valor_quatrto_lugar")
+	nome := c.PostForm("nome")
+	datIni := c.PostForm("dataInical")
+	datFim := c.PostForm("dataFim")
+	valPrimeioPremioStr := c.PostForm("valor_primeioro_lugar")
+	valSegundoLugarStr := c.PostForm("Valor_segundo_lugar")
+	valoTerceiroLugarStr := c.PostForm("valor_terceiro_lugar")
+	valorQuartoLugarStr := c.PostForm("valor_quatrto_lugar")
 	cartaz := "img"
 
 	vp, err := strconv.ParseFloat(valPrimeioPremioStr, 64)
