@@ -11,8 +11,6 @@ type CampeonatoService struct {
 	RepoCamoponanto r.CampeonatoRepository
 }
 
-var validacao domain.MessagenErros
-
 func NewCamponatoServece(repo *r.CamponatoRepoDb) *CampeonatoService {
 	return &CampeonatoService{RepoCamoponanto: repo}
 }
@@ -28,11 +26,32 @@ func (c *CampeonatoService) GetById(id string) (domain.Campeonato, error) {
 func (c *CampeonatoService) Create(nome string, data_ini, data_final time.Time, vpLugar,
 	vsLugar, vtLugar, vqLugar float64, cartaz string) (domain.Campeonato, error) {
 	camp := domain.NovoCampeonato()
-	validacao.CampoObriatorio = nome
-	validacao.DataInicial = data_ini
-	validacao.DataFinal = data_final
-	validacao.DataObriagoria = data_ini
-	validacao.ChecarMenorValor()
+	err := domain.ValidarCampoObrigatorio(nome, "Nome")
+
+	if err != nil {
+		return domain.Campeonato{}, err
+	}
+	domain.FormatSpace(nome)
+
+	err = domain.VmenorValo(vpLugar, vsLugar, "Primeiro lugar", "Segundo lugar")
+	if err != nil {
+		return domain.Campeonato{}, err
+	}
+
+	err = domain.VDataObrigatoria(data_ini)
+
+	if err != nil {
+		return domain.Campeonato{}, err
+	}
+	err = domain.VDataObrigatoria(data_final)
+
+	if err != nil {
+		return domain.Campeonato{}, err
+	}
+	err = domain.ChecarDatas(data_ini, data_final)
+	if err != nil {
+		return domain.Campeonato{}, err
+	}
 
 	camp.Nome = nome
 	camp.DataInicial = data_ini

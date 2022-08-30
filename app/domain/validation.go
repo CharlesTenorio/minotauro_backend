@@ -19,8 +19,8 @@ func VDataObrigatoria(dateV time.Time) error {
 	return nil
 }
 
-func ValidarCampoObrigatorio(campo string) error {
-	if campo == "" {
+func ValidarCampoObrigatorio(validar_campo, campo string) error {
+	if validar_campo == "" {
 		return errors.New("e obriagatório o" + campo)
 	}
 	return nil
@@ -38,7 +38,8 @@ func ChecarDatas(dataIni, dataFim time.Time) error {
 	if dataIni.Equal(dataFim) {
 		return errors.New("as datas não pode ser iguais")
 	}
-	if dataFim.After(dataIni) {
+
+	if dataFim.Before(dataIni) {
 		return errors.New("a data final não pode ser menor q data inicial")
 	}
 	return nil

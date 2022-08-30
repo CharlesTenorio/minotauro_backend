@@ -2,17 +2,16 @@ package startapp
 
 import (
 	"github.com/gin-gonic/gin"
+
 	"minotauro/app/framework/api"
-	"net/http"
 )
 
 func Start() {
 	g := gin.Default()
+
 	g.POST("/criar_campeonato", api.CriarCampeonato)
-	g.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
+	g.GET("/pegar_campeonanto/:id", api.PegarCampeonato)
+	g.GET("/listar_campeonanto", api.ListarCampeonato)
+
 	g.Run()
 }

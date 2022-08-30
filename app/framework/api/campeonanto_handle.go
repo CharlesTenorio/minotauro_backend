@@ -7,6 +7,7 @@ import (
 	"minotauro/app/services"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -61,6 +62,7 @@ func CriarCampeonato(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	nome = strings.ToUpper(nome)
 	cp, err := serv.Create(nome, data_ini, data_fim, vp, vs, vt, vq, cartaz)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -69,4 +71,49 @@ func CriarCampeonato(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, gin.H{"compeonato": cp})
 	return
+}
+
+func PegarCampeonato(c *gin.Context) {
+	id := c.Param("id")
+	db, err := database.Conn()
+	defer db.Close()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+
+	repositorySql := repositorios.NewCampeonatoDb(db)
+	serv := services.NewCamponatoServece(repositorySql)
+
+	cp, err := serv.GetById(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"compeonato": cp})
+	return
+
+}
+
+func ListarCampeonato(c *gin.Context) {
+
+	db, err := database.Conn()
+	defer db.Close()
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+
+	repositorySql := repositorios.NewCampeonatoDb(db)
+	serv := services.NewCamponatoServece(repositorySql)
+	cp, err := serv.FindAll()
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"compeonatos": cp})
+	return
+
 }

@@ -19,39 +19,41 @@ func NewCampeonatoDb(db *sql.DB) *CamponatoRepoDb {
 func (c *CamponatoRepoDb) FindAll() ([]d.Campeonato, error) {
 	var campeonato d.Campeonato
 	var campeonatos []d.Campeonato
-	stmt, err := c.db.Query("SELECT id_campeonato, nome, data_inicial, data_fimal, valor_primeiro_lugar, " +
-		"valor_segundo_lugar, valor_terceiro_lugar, valor_quarto_lugar, cartaz, ativo, data_at")
+	sqlSelect := "SELECT id_campeonato, nome, data_inicial, data_fimal, valor_primeiro_lugar, valor_segundo_lugar, valor_terceiro_lugar, valor_quarto_lugar, cartaz, ativo, data_at, soft_delete"
+	stmt, err := c.db.Query(sqlSelect + " FROM campeonato")
 	if err != nil {
 		fmt.Print(err)
 		return []d.Campeonato{}, err
 	}
 	for stmt.Next() {
 		err = stmt.Scan(&campeonato.IdCamponato, &campeonato.Nome, &campeonato.DataInicial, &campeonato.DataFinal,
-			&campeonato.ValPrimeiroLugar, &campeonato.ValSegundoLugar, &campeonato.ValTerceiroLugar, &campeonato.Cartaz,
-			&campeonato.Ativo, &campeonato.DataAt)
+			&campeonato.ValPrimeiroLugar, &campeonato.ValSegundoLugar, &campeonato.ValTerceiroLugar, &campeonato.ValQuartoLugar, &campeonato.Cartaz,
+			&campeonato.Ativo, &campeonato.DataAt, &campeonato.SoftDelete)
+		campeonatos = append(campeonatos, campeonato)
 	}
-	campeonatos = append(campeonatos, campeonato)
 
 	return campeonatos, nil
 
 }
 
 func (c *CamponatoRepoDb) GetById(id string) (d.Campeonato, error) {
+
 	var campeonato d.Campeonato
-	stmt, err := c.db.Prepare("SELECT id_campeonato, nome, data_inicial, data_fimal, valor_primeiro_lugar, " +
-		"valor_segundo_lugar, valor_terceiro_lugar, valor_quarto_lugar, cartaz, ativo, data_at" +
-		" where id_campeonato =$1")
+	sqlSelect := "SELECT id_campeonato, nome, data_inicial, data_fimal, valor_primeiro_lugar, valor_segundo_lugar, valor_terceiro_lugar, valor_quarto_lugar, cartaz, ativo, data_at, soft_delete"
+	stmt, err := c.db.Prepare(sqlSelect + " FROM campeonato where id_campeonato=$1")
+
 	if err != nil {
 		fmt.Print(err)
 		return d.Campeonato{}, err
 	}
 	err = stmt.QueryRow(id).Scan(&campeonato.IdCamponato, &campeonato.Nome, &campeonato.DataInicial, &campeonato.DataFinal,
-		&campeonato.ValPrimeiroLugar, &campeonato.ValSegundoLugar, &campeonato.ValTerceiroLugar, &campeonato.Cartaz,
-		&campeonato.Ativo, &campeonato.DataAt)
+		&campeonato.ValPrimeiroLugar, &campeonato.ValSegundoLugar, &campeonato.ValTerceiroLugar, &campeonato.ValQuartoLugar,
+		&campeonato.Cartaz, &campeonato.Ativo, &campeonato.DataAt, &campeonato.SoftDelete)
 	if err != nil {
-		fmt.Println(string(err.Error()))
+
 		return d.Campeonato{}, err
 	}
+
 	return campeonato, nil
 
 }
@@ -76,10 +78,10 @@ func (c *CamponatoRepoDb) Create(campeonato d.Campeonato) (d.Campeonato, error) 
 }
 
 func (c *CamponatoRepoDb) Update(campeonato d.Campeonato) (d.Campeonato, error) {
-	err := validation.Prepere()
+	/*err := validation.Prepere()
 	if err != nil {
 		return d.Campeonato{}, err
-	}
+	}*/
 	stmt, err := c.db.Prepare("UPDATE campeonato " +
 		"SET nome=$2, data_inicial=$3, data_fimal=$4, valor_primeiro_lugar=$5," +
 		"valor_segundo_lugar=$6, valor_terceiro_lugar=$7, valor_quarto_lugar=$8," +
